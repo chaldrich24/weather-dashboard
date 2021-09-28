@@ -153,3 +153,7 @@ button {
     justify-content: space-between;
 }
 
+#weather-info {
+    display: none;
+}
+

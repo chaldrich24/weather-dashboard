@@ -8,12 +8,18 @@ var cityNameEl = document.querySelector("#city-name");
 var forecastEl = document.querySelector("#forecast-container");
 var uvSpanEl = document.querySelector("#uv-format");
 var cityBtnsEl = document.querySelector("#city-btns");
+var weatherInfoEl = document.querySelector("#weather-info");
 
 var cityStor = [];
 
 var getFormWeatherData = function(event) {
     event.preventDefault();
     if (event.type === "submit") {
+        if (searchInputEl.value === "") {
+            alert("Please enter a city.");
+            return false;
+        }
+
         var city = searchInputEl.value.trim();
         city = city.toLowerCase();
         var newSearch = true;
@@ -25,15 +31,24 @@ var getFormWeatherData = function(event) {
         var newSearch = false;
     }
 
-    fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=5deff2594512a1498e8a3b274d78f399&units=imperial")
-    .then(function(response) {
-        response.json().then(function(data) {
-            console.log(data);
-            displayCurrentWeather(data);
-            if (newSearch) {
-                saveCity(data.name);
-            }
-        });
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=5deff2594512a1498e8a3b274d78f399&units=imperial";
+
+    fetch(apiUrl).then(function(response) {
+        if (response.ok) {
+            weatherInfoEl.style.display = "flex";
+            response.json().then(function(data) {
+                displayCurrentWeather(data);
+                if (newSearch) {
+                    saveCity(data.name);
+                }
+            });
+        }
+        else {
+            alert("Error: City not found.");
+        }
+    })
+    .catch(function() {
+        alert("Unable to Connect");
     });
 };
 
