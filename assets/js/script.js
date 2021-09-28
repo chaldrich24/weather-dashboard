@@ -7,19 +7,32 @@ var currentUvEl = document.querySelector("#current-uv");
 var cityNameEl = document.querySelector("#city-name");
 var forecastEl = document.querySelector("#forecast-container");
 var uvSpanEl = document.querySelector("#uv-format");
+var cityBtnsEl = document.querySelector("#city-btns");
 
-var getWeatherData = function(event) {
+var cityStor = [];
+
+var getFormWeatherData = function(event) {
     event.preventDefault();
-    
-    // Assign entered city to variable
-    var city = searchInputEl.value.trim();
-    city = city.toLowerCase();
+    if (event.type === "submit") {
+        var city = searchInputEl.value.trim();
+        city = city.toLowerCase();
+        var newSearch = true;
+    }
+
+    else if (event.type === "click") {
+        var city = event.target.textContent;
+        city = city.toLowerCase();
+        var newSearch = false;
+    }
 
     fetch("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=5deff2594512a1498e8a3b274d78f399&units=imperial")
     .then(function(response) {
         response.json().then(function(data) {
             console.log(data);
             displayCurrentWeather(data);
+            if (newSearch) {
+                saveCity(data.name);
+            }
         });
     });
 };
@@ -88,4 +101,40 @@ var setUvFormat = function(data) {
     }
 };
 
-searchFormEl.addEventListener("submit", getWeatherData);
+var saveCity = function(city) {
+    for (i = 0; i < cityBtnsEl.children.length; i++) {
+        console.log(cityBtnsEl.children[i].textContent);
+        if (city === cityBtnsEl.children[i].textContent) {
+            return false;
+        }
+    };
+
+    createCityButton(city);
+    cityStor.push(city);
+    localStorage.setItem("cities", JSON.stringify(cityStor));
+};
+
+var createCityButton = function(city) {
+    var cityBtn = document.createElement("button");
+    cityBtn.classList.add("city-btn");
+    cityBtn.textContent = city;
+
+    cityBtnsEl.appendChild(cityBtn);
+};
+
+var loadCities = function() {
+    if (localStorage.getItem("cities") === null) {
+        return false;
+    }
+
+    cityStor = JSON.parse(localStorage.getItem("cities"));
+    
+    for (i = 0; i < cityStor.length; i++) {
+        createCityButton(cityStor[i]);
+    }
+};
+
+loadCities();
+
+searchFormEl.addEventListener("submit", getFormWeatherData);
+cityBtnsEl.addEventListener("click", getFormWeatherData);
