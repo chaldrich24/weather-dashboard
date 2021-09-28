@@ -30,10 +30,11 @@ input {
 }
 
 button {
-    padding: 3px;
-    color: #fff;
+    padding: 7px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid #c9c9c9;
 }
 
 .column {
@@ -49,7 +50,64 @@ button {
     width: 25%;
 }
 
+.three-quarters {
+    width: 75%;
+    margin-left: 30px;
+}
+
 .search-btn {
     background-color: #62d3f5;
+    color: #fff;
+}
+
+.search-form {
+    border-bottom: 2px solid #000;
+    padding-bottom: 15px;
+}
+
+.city-btns {
+    margin-top: 15px;
+}
+
+.city-btn {
     border-radius: 5px;
+    margin-top: 5px;
+    background-color: #c9c9c9;
+    color: #696969;
+}
+
+.city-overview {
+    border: 2px solid #c9c9c9;
+    padding: 10px;
+}
+
+.city-overview > * {
+    margin-top: 15px;
+}
+
+.city-overview h3 {
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.five-day h2 {
+    font-size: 20px;
+}
+
+.card {
+    border: 1px solid #000;
+    background-color: #24334f;
+    color: #fff;
+    padding: 5px;
+    width: 15%;
+    padding-bottom: 15px;
+}
+
+.card h4 {
+    margin-top: 20px;
+}
+
+#forecast-container {
+    display: flex;
+    justify-content: space-between;
 }
