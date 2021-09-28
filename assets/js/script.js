@@ -6,7 +6,7 @@ var currentHumEl = document.querySelector("#current-humidity");
 var currentUvEl = document.querySelector("#current-uv");
 var cityNameEl = document.querySelector("#city-name");
 var forecastEl = document.querySelector("#forecast-container");
-
+var uvSpanEl = document.querySelector("#uv-format");
 
 var getWeatherData = function(event) {
     event.preventDefault();
@@ -26,13 +26,9 @@ var getWeatherData = function(event) {
 
 var displayCurrentWeather = function(data) {
     var weatherIcon = data.weather[0].icon;
-    console.log(weatherIcon);
-    var weatherIconEl = document.createElement("img");
-    weatherIconEl.src = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
-    console.log(weatherIconEl);
-    cityNameEl.appendChild(weatherIconEl);
+    var currentDate = moment().format("M/DD/YYYY");
 
-    cityNameEl.innerHTML = data.name + "<img src='https://openweathermap.org/img/wn/" + weatherIcon + ".png' />";
+    cityNameEl.innerHTML = data.name + " (" + currentDate + ")" + "<img src='https://openweathermap.org/img/wn/" + weatherIcon + ".png' />";
     currentTempEl.textContent = "Temp: " + data.main.temp + "\u00B0F";
     currentWindEl.textContent = "Wind: " + data.wind.speed + " MPH";
     currentHumEl.textContent = "Humidity: " + data.main.humidity + "%";
@@ -41,7 +37,8 @@ var displayCurrentWeather = function(data) {
     .then(function(response) {
         response.json().then(function(data) {
             console.log(data);
-            currentUvEl.textContent = "UV Index: " + data.current.uvi;
+            uvSpanEl.textContent = data.current.uvi;
+            setUvFormat(data);
             displayDailyWeather(data);
         });
     });
@@ -50,13 +47,12 @@ var displayCurrentWeather = function(data) {
 var displayDailyWeather = function(data) {
     var forecastDays = forecastEl.children;
     
-    
     for (i = 0; i < forecastDays.length; i++) {
         var cardArr = forecastDays[i].children;
         for (j = 0; j < cardArr.length; j++) {
             switch (j) {
                 case 0:
-                    cardArr[j].textContent = "Date";
+                    cardArr[j].textContent = moment().add((i+1), "days").format("M/DD/YYYY");
                     break;
                 case 1:
                     cardArr[j].src = "https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png"
@@ -71,6 +67,24 @@ var displayDailyWeather = function(data) {
                     break;
             }
         }
+    }
+};
+
+var setUvFormat = function(data) {
+    var currentUv = data.current.uvi;
+    uvSpanEl.className = ' ';
+
+    if (currentUv < 3) {
+        uvSpanEl.classList.add("uv-low");
+    }
+    else if (currentUv < 6) {
+        uvSpanEl.classList.add("uv-moderate");
+    }
+    else if (currentUv < 8) {
+        uvSpanEl.classList.add("uv-high");
+    }
+    else {
+        uvSpanEl.classList.add("uv-very-high");
     }
 };
 

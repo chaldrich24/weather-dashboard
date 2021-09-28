@@ -101,6 +101,10 @@ button {
     font-weight: normal;
 }
 
+.city-overview h3 span {
+    padding: 3px 10px;
+}
+
 .five-day h2 {
     font-size: 20px;
 }
@@ -122,6 +126,26 @@ button {
 .card img {
     width: 45%;
     height: auto;
+}
+
+.uv-low {
+    background-color: #28b84f;
+    color: #fff;
+}
+
+.uv-moderate {
+    background-color: #ffff61;
+    color: #000;
+}
+
+.uv-high {
+    background-color: #fab432;
+    color: #000;
+}
+
+.uv-very-high {
+    background-color: #fc3826;
+    color: #000;
 }
 
 #forecast-container {
