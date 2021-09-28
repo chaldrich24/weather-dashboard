@@ -16,8 +16,8 @@
         <div id="search-box" class="column one-quarter">
             <div class="column search-form">
                 <h2>Search for a City:</h2>
-                <form class="column">
-                    <input type="text" placeholder="City Name"></input>
+                <form class="column" id="search-form">
+                    <input type="text" placeholder="City Name" id="city-input"></input>
                     <button type="submit" class="search-btn">Search</button>
                 </form>
             </div>
@@ -29,11 +29,11 @@
         <div id="weather-info" class="column three-quarters">
             <!-- City Weather overview -->
             <div class="city-overview">
-                <h2>Atlanta</h2>
-                <h3>Temp:</h3>
-                <h3>Temp:</h3>
-                <h3>Temp:</h3>
-                <h3>Temp:</h3>
+                <h2>City Name</h2>
+                <h3 id="current-temp">Temp:</h3>
+                <h3 id="current-wind">Wind:</h3>
+                <h3 id="current-humidity">Humidity:</h3>
+                <h3 id="current-uv">UV Index:</h3>
             </div>
             
             <!-- City 5-Day Forecast -->
