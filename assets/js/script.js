@@ -5,6 +5,7 @@ var currentWindEl = document.querySelector("#current-wind");
 var currentHumEl = document.querySelector("#current-humidity");
 var currentUvEl = document.querySelector("#current-uv");
 var cityNameEl = document.querySelector("#city-name");
+var forecastEl = document.querySelector("#forecast-container");
 
 
 var getWeatherData = function(event) {
@@ -24,7 +25,14 @@ var getWeatherData = function(event) {
 };
 
 var displayCurrentWeather = function(data) {
-    cityNameEl.textContent = data.name;
+    var weatherIcon = data.weather[0].icon;
+    console.log(weatherIcon);
+    var weatherIconEl = document.createElement("img");
+    weatherIconEl.src = "https://openweathermap.org/img/wn/" + weatherIcon + ".png";
+    console.log(weatherIconEl);
+    cityNameEl.appendChild(weatherIconEl);
+
+    cityNameEl.innerHTML = data.name + "<img src='https://openweathermap.org/img/wn/" + weatherIcon + ".png' />";
     currentTempEl.textContent = "Temp: " + data.main.temp + "\u00B0F";
     currentWindEl.textContent = "Wind: " + data.wind.speed + " MPH";
     currentHumEl.textContent = "Humidity: " + data.main.humidity + "%";
@@ -40,7 +48,30 @@ var displayCurrentWeather = function(data) {
 };
 
 var displayDailyWeather = function(data) {
-    console.log(data);
+    var forecastDays = forecastEl.children;
+    
+    
+    for (i = 0; i < forecastDays.length; i++) {
+        var cardArr = forecastDays[i].children;
+        for (j = 0; j < cardArr.length; j++) {
+            switch (j) {
+                case 0:
+                    cardArr[j].textContent = "Date";
+                    break;
+                case 1:
+                    cardArr[j].src = "https://openweathermap.org/img/wn/" + data.daily[i].weather[0].icon + ".png"
+                case 2:
+                    cardArr[j].textContent = "Temp: " + data.daily[i].temp.day + "\u00B0F";
+                    break;
+                case 3:
+                    cardArr[j].textContent = "Wind: " + data.daily[i].wind_speed + " MPH";
+                    break;
+                case 4:
+                    cardArr[j].textContent = "Humidity: " + data.daily[i].humidity + "%";
+                    break;
+            }
+        }
+    }
 };
 
 searchFormEl.addEventListener("submit", getWeatherData);

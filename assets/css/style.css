@@ -85,6 +85,17 @@ button {
     margin-top: 15px;
 }
 
+.city-overview h2 {
+    display: flex;
+    align-items: center;
+}
+
+.city-overview h2 img {
+    background-color: #696969;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
 .city-overview h3 {
     font-size: 15px;
     font-weight: normal;
@@ -98,13 +109,19 @@ button {
     border: 1px solid #000;
     background-color: #24334f;
     color: #fff;
-    padding: 5px;
+    padding: 12px;
     width: 15%;
     padding-bottom: 15px;
 }
 
 .card h4 {
-    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.card img {
+    width: 45%;
+    height: auto;
 }
 
 #forecast-container {
