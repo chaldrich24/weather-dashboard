@@ -26,6 +26,10 @@ var getFormWeatherData = function(event) {
     }
 
     else if (event.type === "click") {
+        console.log(event);
+        if (event.target.localName === "div") {
+            return false;
+        }
         var city = event.target.textContent;
         city = city.toLowerCase();
         var newSearch = false;
